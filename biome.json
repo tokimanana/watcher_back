@@ -1,0 +1,69 @@
+{
+    "$schema": "https://biomejs.dev/schemas/2.0.6/schema.json",
+    "vcs": {
+        "enabled": false,
+        "clientKind": "git",
+        "useIgnoreFile": false
+    },
+    "files": {
+        "ignoreUnknown": false,
+        "includes": ["./**/*.ts", "src/**/*.ts"]
+    },
+    "formatter": {
+        "enabled": true,
+        "indentWidth": 4,
+        "lineWidth": 150,
+        "indentStyle": "space",
+        "lineEnding": "lf"
+    },
+    "linter": {
+        "enabled": true,
+
+        "rules": {
+            "style": {
+                "noNonNullAssertion": "off"
+            },
+            "a11y": {
+                "noAriaUnsupportedElements": "off",
+                "useButtonType": "off",
+                "noStaticElementInteractions": "off",
+                "useKeyWithClickEvents": "off",
+                "noLabelWithoutControl": "off"
+            },
+            "recommended": true,
+            "correctness": {
+                "useExhaustiveDependencies": "off",
+                "useHookAtTopLevel": "off"
+            },
+            "suspicious": {
+                "noExplicitAny": "off",
+                "noArrayIndexKey": "off",
+                "noThenProperty": "off"
+            },
+            "nursery": {
+                "useUniqueElementIds": "off"
+            }
+        }
+    },
+    "javascript": {
+        "formatter": {
+            "jsxQuoteStyle": "double",
+            "quoteProperties": "asNeeded",
+            "trailingCommas": "none",
+            "semicolons": "asNeeded",
+            "arrowParentheses": "always",
+            "bracketSpacing": true,
+            "bracketSameLine": false,
+            "quoteStyle": "single",
+            "attributePosition": "auto"
+        }
+    },
+    "assist": {
+        "enabled": true,
+        "actions": {
+            "source": {
+                "organizeImports": "on"
+            }
+        }
+    }
+}

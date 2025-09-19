@@ -1,0 +1,6 @@
+{
+    "watch": ["app.ts", "bootstrap.ts", "src"],
+    "ext": "ts,js,json,env",
+    "ignore": ["dist", "node_modules", "**/*.test.ts"],
+    "exec": "node -r ts-node/register -r tsconfig-paths/register app.ts"
+}
