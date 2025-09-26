@@ -32,6 +32,8 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - ./data:/data # Mount data directory for CSV files
+      - ./init-scripts:/docker-entrypoint-initdb.d # Mount init scripts
     restart: unless-stopped
 
 volumes:
