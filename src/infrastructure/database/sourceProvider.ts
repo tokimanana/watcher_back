@@ -15,14 +15,9 @@ export const AppDataSource = new DataSource({
     migrations: []
 })
 
-export const ensureDataSource = async (): Promise<DataSource> => {
+export const createQueryRunner = () => {
     if (!AppDataSource.isInitialized) {
-        await AppDataSource.initialize()
+        throw new Error("Data source is not initialized. Call 'AppDataSource.initialize()' first.")
     }
-    return AppDataSource
-}
-
-export const transaction = async () => {
-    await ensureDataSource()
     return AppDataSource.createQueryRunner()
 }

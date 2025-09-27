@@ -1,4 +1,4 @@
-import { ICourseService } from "@core/services/courseService";
+import { ICourseService } from "@core/services/ICourseService";
 import { TYPE } from "@shared/di";
 import { inject, injectable } from "inversify";
 import { Request, Response } from "express";

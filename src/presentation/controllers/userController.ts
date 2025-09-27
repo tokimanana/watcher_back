@@ -1,12 +1,10 @@
 import { LoginUserDto } from '@application/dto/auth.dto';
 import { CreateUserDto } from '@application/dto/createUser.dto';
-import { IUserService } from '@core/services/userService';
+import { IUserService } from '@core/services/IUserService';
 import { TYPE } from '@shared/di/type';
-import { Request, Response, Router } from 'express';
+import { Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
 import jwt from 'jsonwebtoken';
-
-
 
 @injectable()
 export class UserController {
@@ -19,7 +17,6 @@ export class UserController {
 
   public async createUser(req: Request, res: Response) {
     try {
-      console.log('Request body:', req.body); // Debug log
       const createUserDto = req.body as CreateUserDto;
 
       // Validate the DTO
@@ -62,7 +59,7 @@ export class UserController {
       const { passwordHash, ...userWithoutPassword } = user;
       return res.status(200).send(userWithoutPassword);
     } catch (error: any) {
-      res.locals['message'] = 'Error fetching user'+error.message;
+      res.locals['message'] = 'Error fetching user' + error.message;
       return res.status(500).send(null);
     }
   }
@@ -76,7 +73,7 @@ export class UserController {
       });
       res.status(200).send(usersWithoutPasswords);
     } catch (error: any) {
-      res.locals['message'] = 'Error fetching all users'+error.message;
+      res.locals['message'] = 'Error fetching all users' + error.message;
       res.status(500).send(null);
     }
   }
@@ -100,7 +97,7 @@ export class UserController {
         res.locals['message'] = 'Email dejà utilisé';
         return res.status(409).send(null);
       }
-      res.locals['message'] = 'Error updating user'+error.message;
+      res.locals['message'] = 'Error updating user' + error.message;
       return res.status(500).send(null);
     }
     return null;
@@ -118,7 +115,7 @@ export class UserController {
 
       return res.status(204).send(null);
     } catch (error: any) {
-      res.locals['message'] = 'Error deleting user'+error.message;
+      res.locals['message'] = 'Error deleting user' + error.message;
       return res.status(500).send(null);
     }
   }
@@ -131,7 +128,7 @@ export class UserController {
       if (!authResult) {
         res.locals['message'] = 'login ou mot de passe invalide';
         return res.status(401).send(null);
-      }else{
+      } else {
         res.locals['message'] = "Utilisateur authentifié";
         return res.status(200).send(authResult);
       }
@@ -141,18 +138,18 @@ export class UserController {
     }
   }
 
-  public async refreshUserToken(req: Request, res: Response){
-    try{
+  public async refreshUserToken(req: Request, res: Response) {
+    try {
       const result = await this.userService.refreshUserToken(req.body.refreshToken)
 
       if (!result) {
         res.locals['message'] = 'refresh token invalide';
         return res.status(401).send(null);
-      }else{
+      } else {
         res.locals['message'] = "Utilisateur authentifié";
         return res.status(200).send(result);
       }
-    }catch (error: any) {
+    } catch (error: any) {
       if (error instanceof jwt.TokenExpiredError) {
         res.locals['message'] = 'Authentification échouée : Jeton expiré.';
         return res.status(401).send(null);
@@ -169,7 +166,7 @@ export class UserController {
   public async revokeTokens(req: Request, res: Response) {
     try {
       const userId = req.user?.id;
-      
+
       if (!userId) {
         res.locals['message'] = 'Utilisateur non authentifié';
         return res.status(401).send(null);

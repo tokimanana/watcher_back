@@ -1,6 +1,6 @@
 import { Course } from "@core/entities";
-import { ICourseRepository } from "@core/repositories/courseRepository";
-import { ICourseService } from "@core/services/courseService";
+import { ICourseRepository } from "@core/repositories/ICourseRepository";
+import { ICourseService } from "@core/services/ICourseService";
 import { TYPE } from "@shared/di";
 import { inject, injectable } from "inversify";
 

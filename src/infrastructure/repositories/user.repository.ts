@@ -1,6 +1,6 @@
 import { Repository } from "typeorm";
 import { AppDataSource } from "@infrastructure/database/sourceProvider";
-import { IUserRepository } from "@core/repositories/userRepository";
+import { IUserRepository } from "@core/repositories/IUserRepository";
 import { User } from "@core/entities/user";
 
 // Implementation de l'interface IUserRepository
@@ -33,8 +33,7 @@ export class UserRepository implements IUserRepository {
 
     async delete(id: string): Promise<boolean> {
         const result = await this.repo.delete({ id });
-        if(!result.affected)
-        {
+        if (!result.affected) {
             throw new Error(`User with id ${id} is not found`)
         }
         return true;

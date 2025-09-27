@@ -13,7 +13,7 @@ routerUser.post('/', async (req, res) => {
     await userContainer.createUser(req, res);
 });
 
-routerUser.get('/', authenticationMiddleware,authorizeRoles(["MEMBER"]),async (req, res) => {
+routerUser.get('/', async (req, res) => {
     await userContainer.getAllUsers(req, res);
 });
 

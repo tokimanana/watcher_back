@@ -1,32 +1,53 @@
--- Create udemy_courses table
-CREATE TABLE IF NOT EXISTS udemy_courses (
-    course_id BIGINT,
-    course_title TEXT,
-    url TEXT,
-    is_paid BOOLEAN,
-    price INTEGER,
-    num_subscribers INTEGER,
-    num_reviews INTEGER,
-    num_lectures INTEGER,
-    level VARCHAR(50),
-    content_duration DECIMAL(10,2),
-    published_timestamp TIMESTAMP,
-    subject VARCHAR(100)
+\echo 'Ensuring udemy_courses table exists'
+
+CREATE TABLE IF NOT EXISTS public.udemy_courses (
+    course_id           BIGINT PRIMARY KEY,
+    course_title        TEXT        NOT NULL,
+    url                 TEXT        NOT NULL,
+    is_paid             BOOLEAN     NOT NULL,
+    price               INTEGER     NOT NULL,
+    num_subscribers     INTEGER     NOT NULL,
+    num_reviews         INTEGER     NOT NULL,
+    num_lectures        INTEGER     NOT NULL,
+    level               VARCHAR(150) NOT NULL,
+    content_duration    NUMERIC(10, 2) NOT NULL,
+    published_timestamp TIMESTAMPTZ NOT NULL,
+    subject             TEXT
 );
 
--- Import CSV data
-COPY udemy_courses FROM '/data/udemy_courses.csv' 
-WITH (FORMAT csv, HEADER true, DELIMITER ',', NULL '');
+-- Check if table has data
+SELECT CASE WHEN EXISTS (SELECT 1 FROM public.udemy_courses LIMIT 1) THEN 1 ELSE 0 END AS has_data \gset
 
--- Create indexes for better query performance
-CREATE INDEX IF NOT EXISTS idx_udemy_subject ON udemy_courses(subject);
-CREATE INDEX IF NOT EXISTS idx_udemy_level ON udemy_courses(level);
-CREATE INDEX IF NOT EXISTS idx_udemy_is_paid ON udemy_courses(is_paid);
+\if :has_data
+    \echo 'udemy_courses already populated. Skipping seed.'
+\else
+    \echo 'Seeding udemy_courses from /data/udemy_courses.csv'
 
--- Display import summary
-SELECT
-    COUNT(*) as total_courses,
-    COUNT(DISTINCT subject) as subjects,
-    COUNT(CASE WHEN is_paid THEN 1 END) as paid_courses,
-    COUNT(CASE WHEN NOT is_paid THEN 1 END) as free_courses
-FROM udemy_courses;
+    -- Import CSV data directly
+    COPY public.udemy_courses (
+        course_id,
+        course_title,
+        url,
+        is_paid,
+        price,
+        num_subscribers,
+        num_reviews,
+        num_lectures,
+        level,
+        content_duration,
+        published_timestamp,
+        subject
+    )
+    FROM '/data/udemy_courses.csv'
+    WITH (
+        FORMAT csv,
+        HEADER true,
+        DELIMITER ',',
+        QUOTE '"',
+        ESCAPE '"',
+        NULL ''
+    );
+
+    \echo 'Seeding completed. Rows imported:'
+    SELECT COUNT(*) FROM public.udemy_courses;
+\endif

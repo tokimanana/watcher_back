@@ -1,2 +1,2 @@
 export * from "./exampleService"
-export * from "./userService"
+export * from "./IUserService"

@@ -1,5 +1,5 @@
 import { Course } from "@core/entities";
-import { ICourseRepository } from "@core/repositories/courseRepository";
+import { ICourseRepository } from "@core/repositories/ICourseRepository";
 import { AppDataSource } from "@infrastructure/database/sourceProvider";
 import { Repository } from "typeorm";
 
