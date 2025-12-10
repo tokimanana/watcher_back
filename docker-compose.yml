@@ -62,6 +62,17 @@ services:
       "
     restart: "no"
 
+  adminer:
+    image: adminer:latest
+    container_name: watcher_adminer
+    environment:
+      - ADMINER_DEFAULT_SERVER=postgres
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
 volumes:
   pgdata:
   app_node_modules:
