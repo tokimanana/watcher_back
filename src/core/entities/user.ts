@@ -1,10 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 export enum UserRole {
-  ADMIN = 'admin',
-  STUDENT = 'student',
-  INSTITUTION = 'institution',
-  SEARCHER = 'searcher'
+  MEMBER = 'member',
 }
 
 @Entity('user')
@@ -21,7 +18,7 @@ export class User {
   @Column({ name: "password_hash", nullable: false })
   passwordHash!: string;
 
-  @Column({ default: UserRole.STUDENT })
+  @Column({ default: UserRole.MEMBER })
   role!: UserRole;
 
   @Column({ default: false })

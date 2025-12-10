@@ -1,5 +1,5 @@
 import { config } from '@config/config'
-import { User } from '@core/entities'
+import { User, Course } from '@core/entities'
 import { DataSource } from 'typeorm'
 
 export const AppDataSource = new DataSource({
@@ -10,9 +10,14 @@ export const AppDataSource = new DataSource({
     password: config.database.password,
     database: config.database.database,
     synchronize: true,
-    entities: [User],
+    entities: [User, Course],
     subscribers: [],
     migrations: []
 })
 
-export const transaction = AppDataSource.createQueryRunner()
+export const createQueryRunner = () => {
+    if (!AppDataSource.isInitialized) {
+        throw new Error("Data source is not initialized. Call 'AppDataSource.initialize()' first.")
+    }
+    return AppDataSource.createQueryRunner()
+}

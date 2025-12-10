@@ -2,8 +2,7 @@ import 'reflect-metadata'
 import cors from 'cors'
 import express, { Express } from 'express'
 import { AppDataSource } from './src/infrastructure/database/sourceProvider'
-import { routerExample } from './src/presentation/api/example.api'
-import { routerUser } from './src/presentation/api/user.api'
+import { routerExample, routerUser, routerCourse } from './src/presentation/api'
 import { errorHandlerMiddleware, notFoundMiddlewareWithError } from './src/presentation/middleware/errorHandler'
 import { responseFormatterMiddleware } from './src/presentation/middleware/responseFormatterMiddleware'
 
@@ -55,4 +54,5 @@ function configureDataBase() {
 function configureRoute(app: Express) {
     app.use('/api/examples', routerExample)
     app.use('/api/users', routerUser)
+    app.use('/api/course', routerCourse)
 }

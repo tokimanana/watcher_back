@@ -1,7 +1,7 @@
 // import { config } from "@config/config";
 import { User, type UserRole } from "@core/entities";
-import type { IUserRepository } from "@core/repositories/userRepository";
-import type { IUserService } from "@core/services/userService";
+import type { IUserRepository } from "@core/repositories/IUserRepository";
+import type { IUserService } from "@core/services/IUserService";
 import { TYPE } from '@shared/di';
 import { generateToken, validateToken, validateTokenVersion } from '@shared/utils/jwt.utils';
 import bcrypt from 'bcryptjs';
@@ -97,10 +97,10 @@ export class UserService implements IUserService {
   }
 
   async deleteUser(id: string): Promise<boolean> {
-      return this.userRepository.delete(id);
+    return this.userRepository.delete(id);
   }
 
-  async authenticateUser(email: string, password: string): Promise<{ user: Omit<User, 'passwordHash'>; accessToken: string; refreshToken: string} | null> {
+  async authenticateUser(email: string, password: string): Promise<{ user: Omit<User, 'passwordHash'>; accessToken: string; refreshToken: string } | null> {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
@@ -129,7 +129,7 @@ export class UserService implements IUserService {
     try {
       const jwtPayload = validateToken(refreshToken);
       const user = await this.userRepository.findByEmail(jwtPayload.email);
-      
+
       if (!user) {
         return null;
       }
@@ -158,7 +158,7 @@ export class UserService implements IUserService {
 
     user.tokenVersion = (user.tokenVersion || 0) + 1;
     const updatedUser = await this.userRepository.update(userId, { tokenVersion: user.tokenVersion });
-    
+
     return updatedUser !== null;
   }
 
@@ -166,7 +166,7 @@ export class UserService implements IUserService {
     try {
       const jwtPayload = validateToken(token);
       const user = await this.userRepository.findByEmail(jwtPayload.email);
-      
+
       if (!user) {
         return false;
       }

@@ -1,0 +1,67 @@
+# === Dependencies ===
+node_modules/
+.pnp.cjs
+.pnp.loader.mjs
+
+# === Build output ===
+dist/
+build/
+out/
+coverage/
+.nyc_output/
+
+# === Logs & diagnostics ===
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+bun-debug.log*
+
+# === Runtime data ===
+*.pid
+*.seed
+*.pid.lock
+
+# === Environment & secrets ===
+.env
+.env.*
+!.env.example
+
+# === TypeScript ===
+*.tsbuildinfo
+
+# === IDE / Editor ===
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+*.swo
+
+# === OS files ===
+.DS_Store
+Thumbs.db
+
+# === Tooling caches ===
+.eslintcache
+.stylelintcache
+/.turbo
+.cache/
+cache/
+
+# === Test artifacts ===
+junit.xml
+reports/
+
+# === Coverage tooling ===
+lcov-report/
+
+# === Misc ===
+tmp/
+temp/
+.husky/_/
+*.tgz
+
+# Keep lock files (pnpm-lock.yaml, package-lock.json, bun.lock, yarn.lock) committed for reproducible installs.
